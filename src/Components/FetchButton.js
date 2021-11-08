@@ -2,16 +2,6 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
   function FetchButton(props) {
-  const questionCategory = useSelector(
-    (state) => state.options.question_category)
-  
-  const questionDifficulty = useSelector(
-    (state) => state.options.question_difficulty
-  )
-  const questionType = useSelector((state) => state.options.question_type)
-  const questionAmount = useSelector(
-    (state) => state.options.amount_of_questions
-  )
   const questionIndex = useSelector((state) => state.index)
 
   const dispatch = useDispatch()
@@ -29,11 +19,8 @@ import { useSelector, useDispatch } from 'react-redux'
       questions: value,
     })
   }
-
   const handleQuery = async () => {
       const apiUrl = `https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean`
-
- 
     setLoading(true)
 
     await fetch(apiUrl)
@@ -56,14 +43,8 @@ import { useSelector, useDispatch } from 'react-redux'
       })
     }
   }
-
   return (
   <div>
-    {/* <div>
-      {props.response && props.response.map(index => <div>
-        {index.questions}
-      </div>)}
-    </div> */}
   <button onClick={handleQuery}>{props.text}</button>
   </div>);
 }

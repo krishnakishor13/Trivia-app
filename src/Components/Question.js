@@ -14,7 +14,7 @@ function Question() {
   const [options, setOptions] = useState([])
 
  
-  console.log('selectedAns', selectedAnswer);
+  // console.log('selectedAns', selectedAnswer);
 
   const score = useSelector((state) => state.score)
   const encodedQuestions = useSelector((state) => state.questions)
@@ -65,12 +65,12 @@ function Question() {
         score: score + 1,
       })
     }
+console.log(event.target.textContent);
 
     if (questionIndex + 1 <= questions.length) {
       setTimeout(() => {
         setAnswerSelected(false)
         setSelectedAnswer(null)
-
 
         dispatch({
           type: 'SET_INDEX',
