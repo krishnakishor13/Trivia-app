@@ -13,8 +13,13 @@ function Question() {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [options, setOptions] = useState([])
 
+ 
+  console.log('selectedAns', selectedAnswer);
+
   const score = useSelector((state) => state.score)
   const encodedQuestions = useSelector((state) => state.questions)
+
+  // console.log(encodedQuestions);
 
   useEffect(() => {
     const decodedQuestions = encodedQuestions.map(q => {
@@ -25,7 +30,7 @@ function Question() {
         incorrect_answers: q.incorrect_answers.map(a => decodeHTML(a))
       }
     })
-
+// console.log(decodedQuestions)
     setQuestions(decodedQuestions)
   }, [encodedQuestions])
   const questionIndex = useSelector((state) => state.index)
@@ -113,9 +118,6 @@ function Question() {
 
      </div>
     </div>
-    
-
-
   )
 }
 export default Question
