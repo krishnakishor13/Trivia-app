@@ -11,6 +11,7 @@ const decodeHTML = function (html) {
 function Question() {
   const [questions, setQuestions] = useState([])
   const [options, setOptions] = useState([])
+  const [disableBtn, setDisableBtn] = useState(false)
 
   const score = useSelector((state) => state.score)
   const encodedQuestions = useSelector((state) => state.questions)
@@ -50,6 +51,7 @@ function Question() {
   }, [question])
 
   const handleListItemClick = (event) => {
+    setDisableBtn(true);
     questions[questionIndex].user_answer = event.target.textContent;
     let newScore = score;
     if (event.target.textContent === answer) {
@@ -68,7 +70,8 @@ function Question() {
           type: 'SET_INDEX',
           index: questionIndex + 1,
 
-        })
+        });
+        setDisableBtn(false);
       }, 250)
     }
   }
@@ -84,9 +87,9 @@ function Question() {
       <h3>{question.question}</h3>
       <ul>
         {options.map((option, i) => (
-          <li key={i} onClick={handleListItemClick} /* className={getClass(option)} */>
+          <button key={i} onClick={handleListItemClick} disabled={disableBtn} /* className={getClass(option)} */>
             {option}
-          </li>
+          </button>
         ))}
       </ul>
       {/* <Decoded handleListItemClick={x}/> */}
