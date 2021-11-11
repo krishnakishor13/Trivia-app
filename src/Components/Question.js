@@ -10,17 +10,11 @@ const decodeHTML = function (html) {
 
 function Question() {
   const [questions, setQuestions] = useState([])
-  const [answerSelected, setAnswerSelected] = useState(false)
-  const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [options, setOptions] = useState([])
-
- 
-  // console.log('selectedAns', selectedAnswer);
 
   const score = useSelector((state) => state.score)
   const encodedQuestions = useSelector((state) => state.questions)
 
-  // console.log(encodedQuestions);
 
   useEffect(() => {
     const decodedQuestions = encodedQuestions.map(q => {
@@ -31,17 +25,16 @@ function Question() {
         incorrect_answers: q.incorrect_answers.map(a => decodeHTML(a))
       }
     })
-// console.log(decodedQuestions)
     setQuestions(decodedQuestions)
   }, [encodedQuestions])
   const questionIndex = useSelector((state) => state.index)
- 
+
 
   const dispatch = useDispatch()
 
   const question = questions[questionIndex]
   const answer = question && question.correct_answer
- 
+
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max))
   }
@@ -54,34 +47,31 @@ function Question() {
     answers.splice(getRandomInt(question.incorrect_answers.length), 0, question.correct_answer)
 
     setOptions(answers)
-  }, [question]) 
+  }, [question])
 
   const handleListItemClick = (event) => {
-    setAnswerSelected(true)
-    setSelectedAnswer(event.target.textContent)
-    
+    questions[questionIndex].user_answer = event.target.textContent;
+    let newScore = score;
     if (event.target.textContent === answer) {
-      dispatch({
-        type: 'SET_SCORE',
-        score: score + 1,
-      })
+      questions[questionIndex].is_correct = true;
+      newScore = score + 1
     }
-    
+    dispatch({
+      type: 'SET_SCORE',
+      score: newScore,
+      questions
+    })
+
     if (questionIndex + 1 <= questions.length) {
       setTimeout(() => {
-        setAnswerSelected(false)
-        setSelectedAnswer(null)
-
         dispatch({
           type: 'SET_INDEX',
-          index: questionIndex +1,
-        
+          index: questionIndex + 1,
+
         })
       }, 250)
     }
   }
-// console.log(score)
-
 
   if (!question) {
     return <div>Loading</div>
@@ -89,7 +79,7 @@ function Question() {
 
   return (
     <div>
-      <p>Question {questionIndex}</p>       
+      <p>Question {questionIndex + 1}</p>
       {/* indexchange */}
       <h3>{question.question}</h3>
       <ul>
@@ -99,7 +89,7 @@ function Question() {
           </li>
         ))}
       </ul>
-     {/* <Decoded handleListItemClick={x}/> */}
+      {/* <Decoded handleListItemClick={x}/> */}
     </div>
   )
 }

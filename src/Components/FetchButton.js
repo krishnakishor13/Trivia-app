@@ -26,7 +26,6 @@ import { useSelector, useDispatch } from 'react-redux'
     await fetch(apiUrl)
       .then((res) => res.json())
       .then((response) => {
-        console.log(response)
         setQuestions(response.results)
         setLoading(false)
       })

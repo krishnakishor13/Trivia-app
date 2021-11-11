@@ -19,7 +19,13 @@ const initState = {
       case 'SET_QUESTIONS':
         return {
           ...state,
-          questions: action.questions,
+          questions: action.questions.map(q => {
+            return {
+              ...q,
+              is_correct: false,
+              user_answer: ""
+            }
+          }),
         }
       case 'SET_INDEX':
         return {
@@ -30,6 +36,7 @@ const initState = {
         return {
           ...state,
           score: action.score,
+          questions: action.questions,
         }
       default:
         return state
