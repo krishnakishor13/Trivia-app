@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+
 const decodeHTML = function (html) {
   const txt = document.createElement('textarea')
   txt.innerHTML = html
@@ -53,20 +54,19 @@ function Question() {
     answers.splice(getRandomInt(question.incorrect_answers.length), 0, question.correct_answer)
 
     setOptions(answers)
-  }, [question])
+  }, [question]) 
 
   const handleListItemClick = (event) => {
     setAnswerSelected(true)
     setSelectedAnswer(event.target.textContent)
-
+    
     if (event.target.textContent === answer) {
       dispatch({
         type: 'SET_SCORE',
         score: score + 1,
       })
     }
-console.log(event.target.textContent);
-
+    
     if (questionIndex + 1 <= questions.length) {
       setTimeout(() => {
         setAnswerSelected(false)
@@ -83,20 +83,6 @@ console.log(event.target.textContent);
 // console.log(score)
 
 
-  const getClass = option => {
-    if (!answerSelected) {
-      return ``;
-    }
-
-    if (option === answer) {
-      return `correct`
-    }
-
-    if (option === selectedAnswer) {
-      return `selected`
-    }
-  }
-
   if (!question) {
     return <div>Loading</div>
   }
@@ -108,15 +94,12 @@ console.log(event.target.textContent);
       <h3>{question.question}</h3>
       <ul>
         {options.map((option, i) => (
-          <li key={i} onClick={handleListItemClick} className={getClass(option)}>
+          <li key={i} onClick={handleListItemClick} /* className={getClass(option)} */>
             {option}
           </li>
         ))}
       </ul>
-     
-     <div>
-
-     </div>
+     {/* <Decoded handleListItemClick={x}/> */}
     </div>
   )
 }

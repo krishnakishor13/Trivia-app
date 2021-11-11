@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
   const Decoded = () => {
+    
     const results = useSelector((state) => state.questions) 
     const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });  
     return (
@@ -10,7 +11,6 @@ import { useSelector } from 'react-redux'
         {results.map((result,i)=>(
           <li key = {i} >
            <div> {<p>Question</p>} {renderHTML(result.question)} </div>
-
           <div>  {<p>Correct Answer</p>} {result.correct_answer} </div>
           </li>
         ))}

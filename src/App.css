@@ -171,13 +171,13 @@ li:hover {
   color: #222;
 }
 
-li.correct {
+/* li.correct {
   background-color: rgb(53, 212, 53);
 }
 
 li.selected:not(correct) {
   background-color: rgb(206, 58, 58);
-}
+} */
 
 .scorecard h3 {
   margin-top: 50%;
